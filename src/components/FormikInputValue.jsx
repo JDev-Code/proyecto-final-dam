@@ -12,7 +12,7 @@ const style = {
   }
 }
 
-function FormikInputValue ({ name, setDisabled, initialValues, ...props }) {
+function FormikInputValue ({ name, setDisabled, ...props }) {
 
   const [field, meta, helpers] = useField(name)
 

@@ -2,12 +2,13 @@ import React from 'react'
 import { Formik } from 'formik'
 import { useState, useEffect } from 'react'
 import { Button, View, Text, TouchableWithoutFeedback } from 'react-native'
-import { loginValidationSchema } from '../validationSchemas/login'
+import { signupValidationSchema } from '../validationSchemas/signup'
 import FormikInputValue from '../components/FormikInputValue'
 import { Link } from 'react-router-native'
-import { theme } from '../../theme'
+import {theme} from '../../theme'
 
 const initialValues = {
+  username: '',
   email: '',
   password: ''
 }
@@ -25,7 +26,7 @@ const style = {
   link: {
     textAlign: 'center',
     color: 'blue',
-    textDecorationLine: 'underline',
+    textDecorationLine: 'underline'
   },
   tertiary: {
     textAlign: 'center',
@@ -35,43 +36,47 @@ const style = {
 
 function LogInPage () {
 
+  const [validUsername, setValidUsername] = useState(false)
   const [validEmail, setValidEmail] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   useEffect(() => {
-    validEmail && validPassword ? setButtonDisabled(false) : setButtonDisabled(true)
-  }, [validEmail, validPassword])
+    validUsername && validEmail && validPassword ? setButtonDisabled(false) : setButtonDisabled(true)
+  }, [validUsername, validEmail, validPassword])
 
   return (
     <View style={style.window}>
-      <Formik validationSchema={loginValidationSchema} initialValues={initialValues} onSubmit={(values) => console.log(values)} validateOnBlur>
+      <Formik validationSchema={signupValidationSchema} initialValues={initialValues} onSubmit={(values) => console.log(values)} validateOnBlur>
         {({ handleSubmit }) => {
           return (
             <View style={style.form}>
               <FormikInputValue
+                name='username'
+                placeholder='Username'
+                setDisabled={setValidUsername}
+              />
+              <FormikInputValue
                 name='email'
                 placeholder='E-mail'
-                initialValues
                 setDisabled={setValidEmail}
               />
               <FormikInputValue
                 name='password'
                 placeholder='Password'
-                initialValues
                 secureTextEntry
                 setDisabled={setValidPassword}
               />
               <Button
                 onPress={handleSubmit}
-                title='Log In'
+                title='Sign up'
                 disabled={buttonDisabled}
               />
-              <Text />
-              <Text />
-              <Text style={style.tertiary}>You don't have an account?</Text>
-              <Link to='/signUp' component={TouchableWithoutFeedback}>
-                <Text style={style.link}>Sign up here for free!</Text>
+              <Text></Text>
+              <Text></Text>
+              <Text style={style.tertiary}>Already have an account?</Text>
+              <Link to='/logIn' component={TouchableWithoutFeedback}>
+                <Text style={style.link}>Log in</Text>
               </Link>
             </View>
           )

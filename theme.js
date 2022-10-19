@@ -10,7 +10,7 @@ export const theme = {
   colors: {
     main: 'black',
     secondary: 'blue',
-    tertiary: 'light-gray',
+    tertiary: 'gray',
     white: '#f9f9f9'
   },
   link: {

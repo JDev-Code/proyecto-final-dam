@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     paddingHorizontal: 20,
-    paddingVertical: 5
+    paddingVertical: 5,
+    color: 'white'
   },
   default: {
     borderColor: '#b9b9b9'
@@ -32,6 +33,7 @@ function StyledTextInput ({ value, style, error, ...props }) {
   return (
     <TextInput
       style={inputStyle}
+      placeholderTextColor={'lightgrey'}
       {...props} />
   )
 }

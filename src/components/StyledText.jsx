@@ -1,5 +1,12 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
+
+const styles = StyleSheet.create({
+  title:{
+    color: 'white',
+    fontWeight: 'bold'
+  }
+})
 
 function StyledText () {
 

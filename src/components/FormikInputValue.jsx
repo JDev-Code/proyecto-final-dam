@@ -1,5 +1,5 @@
-import { useField } from 'formik'
 import React, { useEffect } from 'react'
+import { useField } from 'formik'
 import { Text } from 'react-native'
 import StyledTextInput from './StyledTextInput'
 
@@ -21,7 +21,7 @@ function FormikInputValue ({ name, setDisabled, ...props }) {
   }, [])
 
   useEffect(() => {
-    meta.error != undefined ? setDisabled(false) : setDisabled(true)
+    ((meta.error != undefined) || (meta.error = '')) ? setDisabled(false) : setDisabled(true)
   }, [meta.error])
 
 

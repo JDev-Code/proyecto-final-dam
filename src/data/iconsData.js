@@ -40,5 +40,12 @@ export default [
     iconName: 'webIcon',
     name: 'web',
     type: 'material-community'
+  },
+  {
+    appbar: false,
+    filter: false,
+    iconName: 'backIcon',
+    name: 'chevron-back',
+    type: 'ionicon'
   }
 ]

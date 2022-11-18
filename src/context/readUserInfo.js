@@ -5,9 +5,9 @@ async function readUserInfo () {
     const value = await AsyncStorage.getItem('myInfo')
     const jsonValue = value !== null ? JSON.parse(value) : null
     if (jsonValue !== null) {
-      return true
+      return jsonValue
     } else {
-      return false
+      return null
     }
   } catch (e) {
     console.log('ERROR: ' + e);

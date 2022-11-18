@@ -16,11 +16,9 @@ const styles = StyleSheet.create({
   }
 })
 
-function CategoriesBar () {
-
-  const [selectedOption, setSelectedOption] = useState('all');
+function CategoriesBar ({selectedOption, setSelectedOption}) {
   
-  function handlePress(){
+  function handlePressAll(){
     setSelectedOption('all')
   }
 
@@ -34,7 +32,7 @@ function CategoriesBar () {
       flexDirection: 'row', width: '100%', height: 40, borderBottomWidth: 1, borderBottomColor: '#3a3a3a',
       justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 15
     }}>
-      <TouchableWithoutFeedback key={'all'} id={'all'} onPress={handlePress}>
+      <TouchableWithoutFeedback key={'all'} id={'all'} onPress={handlePressAll}>
         <View>
           <Text style={textStyle}>ALL</Text>
         </View>

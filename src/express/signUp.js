@@ -2,7 +2,9 @@
 import cipherAES from '../helpers/cipherAES'
 import decipherUserInfo from '../helpers/decipherUserInfo'
 
-async function signup (username, email, password) {
+async function signUp (username, email, password) {
+
+  let fetchResponse = null
 
   await fetch('http://192.168.1.33:3000/signUp', {
     method: 'POST',
@@ -17,13 +19,15 @@ async function signup (username, email, password) {
   }).then(response => {
     return response.json()
   }).then( data => {
-    if (data.exist){
-      decipherUserInfo(data)
+    if (data.correct){
+     fetchResponse = decipherUserInfo(data)
     }
   }).catch(error => {
     console.log('ERROR' + error)
     throw error
   })
+
+  return fetchResponse
 }
 
-export default signup
+export default signUp

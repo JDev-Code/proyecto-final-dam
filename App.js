@@ -1,15 +1,17 @@
 import { NativeRouter } from 'react-router-native'
 import Main from './src/components/Main'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { AppContext } from './src/context/Context'
 
 
 export default function App () {
-  //logIn()
   return (
-      <SafeAreaProvider>
-        <NativeRouter>
+    <SafeAreaProvider>
+      <NativeRouter>
+        <AppContext>
           <Main />
-        </NativeRouter>
-      </SafeAreaProvider>
+        </AppContext>
+      </NativeRouter>
+    </SafeAreaProvider>
   )
 }

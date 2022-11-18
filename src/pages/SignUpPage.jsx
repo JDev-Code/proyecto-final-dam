@@ -1,13 +1,14 @@
 import React from 'react'
 import { Formik } from 'formik'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Button, View, Text, TouchableWithoutFeedback } from 'react-native'
-import { signupValidationSchema } from '../validationSchemas/signup'
+import { signUpValidationSchema } from '../validationSchemas/signUp'
 import FormikInputValue from '../components/FormikInputValue'
 import { Link, useHistory } from 'react-router-native'
 import {theme} from '../../theme'
 import signUp from '../express/signUp'
 import readUserInfo from '../context/readUserInfo'
+import Context from '../context/Context'
 
 const initialValues = {
   username: '',
@@ -18,6 +19,8 @@ const initialValues = {
 function SignUpPage () {
 
   const history = useHistory()
+  const context = useContext(Context)
+  const {userContext, setUserContext} = context
 
   const [validUsername, setValidUsername] = useState(false)
   const [validEmail, setValidEmail] = useState(false)
@@ -27,9 +30,8 @@ function SignUpPage () {
 
   async function handleFormikSubmit({username, email, password}){
     setErrorSignUp('')
-    await signUp(username, email, password)
-    const alreadyLogged = await readUserInfo()
-    alreadyLogged ? history.push('/app/projects') : setErrorSignUp('Email already in use!')
+    setUserContext(await signUp(username, email, password))
+    userContext === null && setErrorSignUp('Email already in use!')
   }
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function SignUpPage () {
 
   return (
     <View style={style.window}>
-      <Formik validationSchema={signupValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit} validateOnBlur>
+      <Formik validationSchema={signUpValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit} validateOnBlur>
         {({ handleSubmit }) => {
           return (
             <View style={style.form}>
@@ -67,7 +69,7 @@ function SignUpPage () {
               <Text></Text>
               <Text></Text>
               <Text style={style.tertiary}>Already have an account?</Text>
-              <Link to='/' underlayColor={'#fff00'} component={TouchableWithoutFeedback}>
+              <Link to='/logIn' underlayColor={'#fff00'} component={TouchableWithoutFeedback}>
                 <Text style={style.link}>Log in</Text>
               </Link>
             </View>

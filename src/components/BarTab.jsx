@@ -11,6 +11,15 @@ const styles = StyleSheet.create({
   },
   categoriesBar: {
     marginHorizontal: 5
+  },
+  button: {
+    borderWidth: 2,
+    borderColor: 'red',
+    borderRadius: 50,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
@@ -19,16 +28,17 @@ function BarTab ({ name, type, id, selectedOption, setSelectedOption, ...props }
   const [selected, setSelected] = useState(false)
 
   useEffect(() => {
-    selectedOption === id ? setSelected(true) : setSelected(false)
+    selectedOption+'Icon' === id ? setSelected(true) : setSelected(false)
   }, [selectedOption])
 
   function handleOnPress () {
-    setSelectedOption(id)
+    setSelectedOption(id.replace('Icon', ''))
   }
 
   const style = [
     props.appBar && styles.appBar,
-    props.categoriesBar && styles.categoriesBar
+    props.categoriesBar && styles.categoriesBar,
+    props.button && styles.button
   ]
 
   let appBar, categoriesBar

@@ -1,14 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Formik } from 'formik'
-import { useState, useEffect } from 'react'
 import { Button, View, Text, TouchableWithoutFeedback } from 'react-native'
-import { loginValidationSchema } from '../validationSchemas/login'
+import { logInValidationSchema } from '../validationSchemas/logIn'
 import FormikInputValue from '../components/FormikInputValue'
-import { Link, useHistory } from 'react-router-native'
+import { Link } from 'react-router-native'
 import { theme } from '../../theme'
-import logInUser from '../hooks/logInUser'
-import readUserInfo from '../context/readUserInfo'
 import logIn from '../express/logIn'
+import Context from '../context/Context'
 
 const initialValues = {
   email: '',
@@ -36,24 +34,19 @@ const style = {
 }
 
 function LogInPage () {
-  const history = useHistory()
-  
+
+  const context = useContext(Context)
+  const { userContext, setUserContext } = context
+
   const [validEmail, setValidEmail] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [errorLogIn, setErrorLogIn] = useState('')
 
-  async function checkLogged () {
-    const alreadyLogged = await readUserInfo()
-    alreadyLogged && history.push('/app/projects')
-  }
-  checkLogged()
-
-  async function handleFormikSubmit({email, password}){
+  async function handleFormikSubmit ({ email, password }) {
     setErrorLogIn('')
-    await logIn(email, password)
-    const alreadyLogged = await readUserInfo()
-    alreadyLogged ? history.push('/app/projects') : setErrorLogIn('Incorrect data. Try again!')
+    setUserContext(await logIn(email, password))
+    userContext === null && setErrorLogIn('Incorrect data. Try again!')
   }
 
   useEffect(() => {
@@ -63,7 +56,7 @@ function LogInPage () {
   return (
 
     <View style={style.window}>
-      <Formik validationSchema={loginValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit}>
+      <Formik validationSchema={logInValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit}>
         {({ handleSubmit }) => {
           return (
             <View style={style.form}>
@@ -83,7 +76,7 @@ function LogInPage () {
                 title='Log In'
                 disabled={buttonDisabled}
               />
-              <Text style={{color: 'red'}}>{errorLogIn}</Text>
+              <Text style={{ color: 'red' }}>{errorLogIn}</Text>
               <Text />
               <Text />
               <Text style={style.tertiary}>You don't have an account?</Text>

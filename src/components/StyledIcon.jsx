@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30
   },
+  backBar: {
+    size: 40,
+    height: 43,
+    width: 43
+  },
   general: {
     alignItems: 'center', 
     justifyContent: 'center'
@@ -33,12 +38,14 @@ function StyledIcon ({ name, type, selected,...props }) {
   if (props.projectIcon) position = 0
   if (props.categoriesBar) position = 1
   if (props.appBar) position = 2
+  if (props.backBar) position = 3
 
 
   const style = [
     props.projectIcon && styles.projectIcon,
     props.categoriesBar && styles.categoriesBar,
     props.appBar && styles.appBar,
+    props.backBar && styles.backBar,
     styles.general
   ]
 

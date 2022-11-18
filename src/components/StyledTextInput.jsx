@@ -7,7 +7,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingHorizontal: 20,
     paddingVertical: 5,
-    color: 'white'
+    color: 'white',
+  },
+  multiline: {
+    textAlignVertical: 'top',
+    paddingVertical: 15,
   },
   default: {
     borderColor: '#b9b9b9'
@@ -20,10 +24,11 @@ const styles = StyleSheet.create({
   }
 })
 
-function StyledTextInput ({ value, style, error, ...props }) {
+function StyledTextInput ({ value, style, error, multiline, ...props }) {
 
   let inputStyle = [
     styles.textInput,
+    multiline && styles.multiline,
     error && styles.error,
     !error && styles.noError,
     value === '' && styles.default,
@@ -31,10 +36,11 @@ function StyledTextInput ({ value, style, error, ...props }) {
   ]
 
   return (
-    <TextInput
-      style={inputStyle}
-      placeholderTextColor={'lightgrey'}
-      {...props} />
+      <TextInput
+        style={inputStyle}
+        placeholderTextColor={'lightgrey'}
+        multiline={multiline}
+        {...props} />
   )
 }
 

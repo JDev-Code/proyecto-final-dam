@@ -1,15 +1,16 @@
 import React from 'react'
-import {StatusBar} from 'expo-status-bar'
-import { View, Text } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+import { View } from 'react-native'
 import Constants from 'expo-constants'
-import { Route, Switch, useHistory } from 'react-router-native'
+import { Route, Switch } from 'react-router-native'
 import AppBar from './AppBar'
-import LogInPage from '../pages/LogIn'
-import SignUpPage from '../pages/SignUp'
-import ProjectListPage from '../pages/ProjectList'
-import ChatPage from '../pages/Chats'
-import Profile from '../pages/Profile'
-import readUserInfo from '../context/readUserInfo'
+import LogInPage from '../pages/LogInPage'
+import SignUpPage from '../pages/SignUpPage'
+import ProjectListPage from '../pages/ProjectListPage'
+import ChatPage from '../pages/ChatPage'
+import Profile from '../pages/ProfilePage'
+import LandingPage from '../pages/LandingPage'
+import CreateProjectPage from '../pages/CreateProjectPage'
 
 
 function Main () {
@@ -17,14 +18,22 @@ function Main () {
     <>
       <StatusBar style={'light'} />
       <View style={{ paddingTop: Constants.statusBarHeight, height: '100%', backgroundColor: '#0c0c0c' }}>
+
         <Switch>
           <Route path='/' exact>
+            <LandingPage />
+          </Route>
+          <Route path='/logIn' exact>
             <LogInPage />
           </Route>
           <Route path='/signUp' exact>
             <SignUpPage />
           </Route>
+          <Route path='/createProject' exact>
+            <CreateProjectPage />
+          </Route>
           <Route path='/app'>
+
             <Switch>
               <View style={{ height: '100%' }}>
                 <Route path='/app/projects' exact>
@@ -36,9 +45,10 @@ function Main () {
                 <Route path='/app/myProfile' exact>
                   <Profile />
                 </Route>
-                <AppBar />
+                <AppBar /> 
               </View>
             </Switch>
+
           </Route>
         </Switch>
       </View>

@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
 
 function AppBar () {
 
-  const [selectedOption, setSelectedOption] = useState('projectIcon')
+  const [selectedOption, setSelectedOption] = useState('project')
 
   const history = useHistory()
   useEffect(() => {
-    if (selectedOption === 'projectIcon') history.push('/app/projects')
-    if (selectedOption === 'chatIcon') history.push('/app/chats')
-    if (selectedOption === 'profileIcon') history.push('/app/myProfile')
+    if (selectedOption === 'project') history.push('/app/projects')
+    if (selectedOption === 'chat') history.push('/app/chats')
+    if (selectedOption === 'profile') history.push('/app/myProfile')
   }, [selectedOption]);
 
   return (

@@ -5,7 +5,7 @@ import Context from "../context/Context"
 
 function LandingPage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
-  
+
   const context = useContext(Context)
   const { userContext, setSelectedWindow } = context
 
@@ -33,3 +33,4 @@ const styles = StyleSheet.create({
 })
 
 export default LandingPage
+

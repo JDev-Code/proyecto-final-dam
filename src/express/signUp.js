@@ -1,5 +1,5 @@
-import cipherAES from '../helpers/cipherAES'
-import decipherUserInfo from '../helpers/decipherUserInfo'
+import cipherAES from '../cipher/cipherAES'
+import decipherUserInfo from '../cipher/decipherUserInfo'
 import {conn} from "./conn"
 
 async function signUp (username, email, password) {

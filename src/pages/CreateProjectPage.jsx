@@ -49,7 +49,6 @@ function CreateProjectPage () {
       setSubmitError('')
       let formatedDescription = formatText(description)
       let formatedTitle = formatText(title)
-      console.log(formatedDescription.length, formatedTitle.length);
       if ((formatedDescription.length >= 20) && (formatedTitle.length >= 3)) {
         console.log('dentro');
         setIsCreated(await newProject(userContext.id, selectedPlatform, formatedTitle, formatedDescription))

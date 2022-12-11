@@ -1,4 +1,4 @@
-import cipherAES from "../helpers/cipherAES"
+import cipherAES from "../cipher/cipherAES"
 import {conn} from "./conn"
 
 async function getUserInfo (id) {

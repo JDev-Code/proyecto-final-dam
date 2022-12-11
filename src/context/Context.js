@@ -66,7 +66,6 @@ export function AppContext ({ children }) {
           setMessagesContext(null)
         }
         if ((userContext !== 'no-user') && (userContext !== 'delete')) {
-          console.log('AQUI DENTROOO');
           await storeUserInfo(userContext)
           createRoom(userContext.id)
           setMessagesContext(await getMessages(userContext.id))

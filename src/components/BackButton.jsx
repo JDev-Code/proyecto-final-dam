@@ -1,22 +1,37 @@
-import { View, Text, TouchableWithoutFeedback } from "react-native"
-import { useHistory } from "react-router-native"
+import { useContext } from "react"
+import { View, StyleSheet, TouchableWithoutFeedback, DeviceEventEmitter } from "react-native"
 import StyledIcon from "./StyledIcon"
+import Context from "../context/Context"
 
-function BackButton () {
-  const history = useHistory()
+
+
+function BackButton ({ to }) {
+  DeviceEventEmitter.removeAllListeners('hardwareBackPress')
+  DeviceEventEmitter.addListener('hardwareBackPress', handleBackPress)
+
+  const context = useContext(Context)
+  const { setSelectedWindow } = context
 
   function handleBackPress () {
-    history.goBack()
+    to && setSelectedWindow(to)
+    DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   }
 
   return (
     <TouchableWithoutFeedback onPress={handleBackPress}>
-      <View style={{ flexDirection: 'row', height: 40, backgroundColor: 'red', alignItems: 'center'}} >
+      <View style={styles.general} >
         <StyledIcon name={'chevron-back'} type={'ionicon'} backBar />
-        <Text style={{ color: 'white' }}>BACK</Text>
       </View>
     </TouchableWithoutFeedback>
   )
 }
+
+const styles = StyleSheet.create({
+  general: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 export default BackButton

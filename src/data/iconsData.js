@@ -47,5 +47,26 @@ export default [
     iconName: 'backIcon',
     name: 'chevron-back',
     type: 'ionicon'
+  },
+  {
+    appbar: false,
+    filter: false,
+    iconName: 'plusIcon',
+    name: 'plus',
+    type: 'entypo'
+  },
+  {
+    appbar: false,
+    filter: false,
+    iconName: 'logoutIcon',
+    name: 'log-out',
+    type: 'entypo'
+  },
+  {
+    appbar: false,
+    filter: false,
+    iconName: 'chatboxIcon',
+    name: 'chatbox-ellipses-outline',
+    type: 'ionicon'
   }
 ]

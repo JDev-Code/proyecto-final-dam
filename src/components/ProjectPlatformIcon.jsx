@@ -1,12 +1,12 @@
 import React from "react";
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import icons from '../data/iconsData';
 import StyledIcon from "./StyledIcon";
 
 
 function ProjectPlatformIcon ({ id, platform }) {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5 }}>
+    <View style={styles.container}>
       {icons.map((icon) => {
         if (icon.iconName === platform + 'Icon') {
           return (
@@ -17,5 +17,13 @@ function ProjectPlatformIcon ({ id, platform }) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    padding: 5
+  }
+})
 
 export default ProjectPlatformIcon

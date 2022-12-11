@@ -1,18 +1,39 @@
-import { View, Text } from "react-native"
+import { View, StyleSheet } from "react-native"
+import { theme } from "../../theme"
 import BackButton from "./BackButton"
-import StyledIcon from "./StyledIcon"
+import CustomImage from "./CustomImage"
+import StyledText from "./StyledText"
 
-function BackBar ({ title, to }) {
+function BackBar ({ title, to, ...props }) {
+
   return (
-    <>
+    <View style={styles.general}>
+      <BackButton to={to} props={props} />
+      {props.chat ?
+        <CustomImage source={require('../../assets/defaultProfile.png')} currentChat />
+        :
+        <View></View>
+      }
       <View>
-        <BackButton />
+        <StyledText text={title} title />
       </View>
-      <View style={{ width: '100%', justifyContent: 'space-around'}}>
-        <Text style={{ color: 'white' }}>{title}</Text>
-      </View>
-    </>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  general: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 55,
+    borderBottomWidth: .4,
+    borderBottomColor: theme.colors.main
+  },
+  title: {
+    width: '100%',
+    justifyContent: 'space-around'
+  }
+})
+
 
 export default BackBar

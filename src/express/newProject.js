@@ -1,11 +1,11 @@
 import cipherAES from "../helpers/cipherAES"
-import decipherUserInfo from '../helpers/decipherUserInfo'
+import {conn} from "./conn"
 
 
 async function newProject (id, platform, title, description) {
   let fetchResponse = null
 
-  await fetch('http://192.168.1.33:3000/newproject', {
+  await fetch(conn + '/newproject', {
     method: 'POST',
     body: JSON.stringify({
       id: cipherAES(id),

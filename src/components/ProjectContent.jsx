@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Text, StyleSheet, TouchableWithoutFeedback, ScrollView, Animated } from 'react-native'
+import { View, StyleSheet, TouchableWithoutFeedback, ScrollView, Animated } from 'react-native'
+import StyledText from "./StyledText"
 
 function ProjectContent ({ description, show }) {
 
@@ -30,7 +31,7 @@ function ProjectContent ({ description, show }) {
 
   const animatedInterpolateHeight = animate.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 250]
+    outputRange: [0, 180]
   })
 
   const animatedInterpolatePaddingVertical = animate.interpolate({
@@ -43,22 +44,24 @@ function ProjectContent ({ description, show }) {
       padding: 3
     },
     general: {
-      height: animatedInterpolateHeight,
+      maxHeight: animatedInterpolateHeight,
       alignSelf: 'center',
       paddingVertical: animatedInterpolatePaddingVertical,
+      paddingHorizontal: 10,
+      width: '90%'
+    },
+    scroll: {
       paddingHorizontal: 10
     }
   })
 
-  const display = [
-    styles.general,
-  ]
-
   return (
-    <Animated.View style={display}>
-      <ScrollView style={{ paddingHorizontal: 10 }} nestedScrollEnabled={true} persistentScrollbar={true}>
+    <Animated.View style={styles.general}>
+      <ScrollView style={styles.scroll} nestedScrollEnabled={true} persistentScrollbar={true}>
         <TouchableWithoutFeedback>
-          <Text style={{ textAlign: "justify" }}>{description}</Text>
+          <View>
+            <StyledText text={description} normal/>
+          </View>
         </TouchableWithoutFeedback>
       </ScrollView>
     </Animated.View>

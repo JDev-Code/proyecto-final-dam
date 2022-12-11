@@ -1,27 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableWithoutFeedback, View, StyleSheet } from "react-native";
+import { theme } from '../../theme';
 import StyledIcon from './StyledIcon';
-
-const styles = StyleSheet.create({
-  appBar: {
-    paddingVertical: 10,
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  categoriesBar: {
-    marginHorizontal: 5
-  },
-  button: {
-    borderWidth: 2,
-    borderColor: 'red',
-    borderRadius: 50,
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
 
 function BarTab ({ name, type, id, selectedOption, setSelectedOption, ...props }) {
 
@@ -54,12 +34,26 @@ function BarTab ({ name, type, id, selectedOption, setSelectedOption, ...props }
   )
 }
 
+const styles = StyleSheet.create({
+  appBar: {
+    paddingVertical: 10,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  categoriesBar: {
+    marginLeft: 5,
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: theme.colors.secondary,
+    borderRadius: 50,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
+
 export default BarTab
 
-/**
- *     <TouchableWithoutFeedback onPress={handleOnPress}>
-      <View style={style}>
-        <StyledIcon name={name} type={type} selected={selected} categoriesBar={categoriesBar} appBar={appBar}/>
-      </View>
-    </TouchableWithoutFeedback>
- */

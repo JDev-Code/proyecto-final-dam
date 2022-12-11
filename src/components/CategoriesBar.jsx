@@ -3,18 +3,10 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import icons from '../data/iconsData'
 import StyledIcon from "./StyledIcon"
 import BarTab from "./BarTab"
+import StyledText from "./StyledText"
+import { theme } from "../../theme"
 
-const styles = StyleSheet.create({
-  text:{
-    fontWeight: 'bold',
-     marginHorizontal: 10, 
-     fontSize: 18,
-     color: 'white'
-  },
-  allSelected:{
-    color: '#a260c0'
-  }
-})
+
 
 function CategoriesBar ({selectedOption, setSelectedOption}) {
   
@@ -28,16 +20,13 @@ function CategoriesBar ({selectedOption, setSelectedOption}) {
   ]
 
   return (
-    <View style={{
-      flexDirection: 'row', width: '100%', height: 40, borderBottomWidth: 1, borderBottomColor: '#3a3a3a',
-      justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 15
-    }}>
+    <View style={styles.container}>
       <TouchableWithoutFeedback key={'all'} id={'all'} onPress={handlePressAll}>
         <View>
-          <Text style={textStyle}>ALL</Text>
+          <StyledText text={'ALL'} custom={textStyle}/>
         </View>
       </TouchableWithoutFeedback>
-      <View style={{ flexDirection: 'row', maxWidth: '50%'}}>
+      <View style={styles.tabsContainer}>
         {icons.map((icon) => {
           if (icon.filter) {
             return (
@@ -49,5 +38,31 @@ function CategoriesBar ({selectedOption, setSelectedOption}) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row', 
+    width: '100%', 
+    height: 40, 
+    borderBottomWidth: .4, 
+    borderBottomColor: theme.colors.main,
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    paddingHorizontal: 15
+  },
+  tabsContainer: {
+    flexDirection: 'row', 
+    maxWidth: '50%'
+  },
+  text:{
+    fontWeight: 'bold',
+     marginHorizontal: 10, 
+     fontSize: 18,
+     color: theme.colors.default
+  },
+  allSelected:{
+    color: theme.colors.main
+  }
+})
 
 export default CategoriesBar

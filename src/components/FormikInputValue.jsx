@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useField } from 'formik'
-import { Text } from 'react-native'
+import { View, Text } from 'react-native'
 import StyledTextInput from './StyledTextInput'
+import StyledText from './StyledText'
 
 const style = {
   error: {
-    marginTop: 5,
-    marginBottom: 10,
-    paddingLeft: 10,
-    color: 'red'
+    width: "100%",
+    paddingLeft: 5
   }
 }
 
@@ -17,12 +16,12 @@ function FormikInputValue ({ name, setDisabled, ...props }) {
   const [field, meta, helpers] = useField(name)
 
   useEffect(() => {
-    meta.error = ""
+    meta.error = ''
   }, [])
 
   useEffect(() => {
-    ((meta.error != undefined) || (meta.error = '')) ? setDisabled(false) : setDisabled(true)
-  }, [meta.error])
+    ((meta.error !== undefined) || (meta.error === "") || (field.value === "")) ? setDisabled(false) : setDisabled(true)
+  }, [meta.error, field.value])
 
 
   return (
@@ -33,7 +32,14 @@ function FormikInputValue ({ name, setDisabled, ...props }) {
         onChangeText={value => helpers.setValue(value)}
         {...props}
       />
-      {meta.error ? <Text style={style.error}>{meta.error}</Text> : <Text style={style.error}></Text>}
+      {props.chat ? '' :
+
+        <View style={style.error}>
+          <StyledText text={meta.error ? meta.error : ''} error/>
+          <Text></Text>
+        </View>
+
+      }
     </>
   )
 }

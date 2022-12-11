@@ -1,19 +1,35 @@
-import React, {useContext} from "react"
-import { View } from "react-native"
-import { useHistory } from "react-router-native"
+import React, { useContext, useEffect } from "react"
+import { View, StyleSheet, DeviceEventEmitter } from "react-native"
+import CustomImage from "../components/CustomImage"
 import Context from "../context/Context"
 
-function LandingPage(){
-  const history = useHistory()
-
-  const context = useContext(Context)
-  const {userContext, setUserContext} = context
+function LandingPage () {
+  DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   
-  setTimeout(() => {
-    userContext !== null ? history.push('/app/projects') : history.push('/logIn')
-  }, 1500)
+  const context = useContext(Context)
+  const { userContext, setSelectedWindow } = context
 
-  return <View style={{backgroundColor: 'green', height: '100%'}}></View>
+  useEffect(() => {
+    setTimeout(() => {
+      userContext !== 'no-user' ? setSelectedWindow('project') : setSelectedWindow('logIn')
+    }, 1500)
+  }, [])
+
+
+  return (
+    <View style={styles.window}>
+      <CustomImage source={require('../../assets/logoWe.png')} landingPage />
+    </View>
+  )
 }
+
+const styles = StyleSheet.create({
+  window: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+})
 
 export default LandingPage

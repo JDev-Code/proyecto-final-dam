@@ -1,17 +1,13 @@
-import cipherAES from '../helpers/cipherAES'
-import decipherUserInfo from '../helpers/decipherUserInfo'
 import {conn} from "./conn"
 
-async function signUp (username, email, password) {
+async function deleteProject (id) {
 
   let fetchResponse = null
 
-  await fetch(conn + '/signUp', {
+  await fetch(conn + '/deleteProject', {
     method: 'POST',
     body: JSON.stringify({
-      username: cipherAES(username),
-      email: cipherAES(email),
-      password: cipherAES(password)
+      id: id
     }),
     headers: {
       'Content-type': 'application/json'
@@ -20,7 +16,7 @@ async function signUp (username, email, password) {
     return response.json()
   }).then( data => {
     if (data.correct){
-     fetchResponse = decipherUserInfo(data)
+     fetchResponse = data.correct
     }
   }).catch(error => {
     console.log('ERROR' + error)
@@ -30,4 +26,4 @@ async function signUp (username, email, password) {
   return fetchResponse
 }
 
-export default signUp
+export default deleteProject

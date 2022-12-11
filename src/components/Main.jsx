@@ -1,26 +1,30 @@
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { View } from 'react-native'
+import { StyleSheet, View, DeviceEventEmitter } from 'react-native'
 import Constants from 'expo-constants'
 import { Route, Switch } from 'react-router-native'
 import AppBar from './AppBar'
 import LogInPage from '../pages/LogInPage'
 import SignUpPage from '../pages/SignUpPage'
 import ProjectListPage from '../pages/ProjectListPage'
-import ChatPage from '../pages/ChatPage'
-import Profile from '../pages/ProfilePage'
+import ChatsPage from '../pages/ChatsPage'
+import ProfilePage from '../pages/ProfilePage'
 import LandingPage from '../pages/LandingPage'
 import CreateProjectPage from '../pages/CreateProjectPage'
-
+import CurrentChatPage from '../pages/CurrentChatPage'
+import { theme } from '../../theme'
 
 function Main () {
+
+  DeviceEventEmitter.removeAllListeners('hardwareBackPress')
+
   return (
     <>
       <StatusBar style={'light'} />
-      <View style={{ paddingTop: Constants.statusBarHeight, height: '100%', backgroundColor: '#0c0c0c' }}>
+      <View style={styles.appContainer}>
 
         <Switch>
-          <Route path='/' exact>
+          <Route path='/landingPage' exact>
             <LandingPage />
           </Route>
           <Route path='/logIn' exact>
@@ -32,20 +36,23 @@ function Main () {
           <Route path='/createProject' exact>
             <CreateProjectPage />
           </Route>
+          <Route path='/currentChat' exact>
+            <CurrentChatPage />
+          </Route>
           <Route path='/app'>
 
             <Switch>
-              <View style={{ height: '100%' }}>
+              <View style={styles.insideContainer}>
                 <Route path='/app/projects' exact>
                   <ProjectListPage />
                 </Route>
                 <Route path='/app/chats' exact>
-                  <ChatPage />
+                  <ChatsPage />
                 </Route>
                 <Route path='/app/myProfile' exact>
-                  <Profile />
+                  <ProfilePage />
                 </Route>
-                <AppBar /> 
+                <AppBar />
               </View>
             </Switch>
 
@@ -55,5 +62,16 @@ function Main () {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  appContainer: {
+    paddingTop: Constants.statusBarHeight,
+    height: '100%',
+    backgroundColor: theme.colors.background
+  },
+  insideContainer: {
+    height: '100%'
+  }
+})
 
 export default Main

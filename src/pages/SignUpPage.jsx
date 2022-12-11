@@ -1,14 +1,14 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useState, useEffect, useContext } from 'react'
-import { Button, View, Text, TouchableWithoutFeedback } from 'react-native'
+import { Pressable, View, StyleSheet, TouchableWithoutFeedback, DeviceEventEmitter, BackHandler } from 'react-native'
 import { signUpValidationSchema } from '../validationSchemas/signUp'
 import FormikInputValue from '../components/FormikInputValue'
-import { Link, useHistory } from 'react-router-native'
-import {theme} from '../../theme'
+import { Link } from 'react-router-native'
+import { theme } from '../../theme'
 import signUp from '../express/signUp'
-import readUserInfo from '../context/readUserInfo'
 import Context from '../context/Context'
+import StyledText from '../components/StyledText'
 
 const initialValues = {
   username: '',
@@ -17,33 +17,48 @@ const initialValues = {
 }
 
 function SignUpPage () {
+  DeviceEventEmitter.removeAllListeners('hardwareBackPress')
+  DeviceEventEmitter.addListener('hardwareBackPress', () => { BackHandler.exitApp() })
 
-  const history = useHistory()
   const context = useContext(Context)
-  const {userContext, setUserContext} = context
+  const { userContext, setUserContext } = context
 
   const [validUsername, setValidUsername] = useState(false)
   const [validEmail, setValidEmail] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [errorSignUp, setErrorSignUp] = useState('')
+  const [buttonStyle, setButtonStyle] = useState([styles.button, styles.buttonDisabled])
 
-  async function handleFormikSubmit({username, email, password}){
-    setErrorSignUp('')
-    setUserContext(await signUp(username, email, password))
-    userContext === null && setErrorSignUp('Email already in use!')
+  async function handleFormikSubmit ({ username, email, password }) {
+    if (!buttonDisabled) {
+      setErrorSignUp('')
+      setUserContext(await signUp(username, email, password))
+      userContext === null && setErrorSignUp('Email already in use!')
+    }
   }
 
   useEffect(() => {
     validUsername && validEmail && validPassword ? setButtonDisabled(false) : setButtonDisabled(true)
   }, [validUsername, validEmail, validPassword])
 
+  useEffect(() => {
+    if (buttonDisabled) {
+      setButtonStyle([styles.button, styles.buttonDisabled])
+    } else {
+      setButtonStyle([styles.button, styles.buttonEnabled])
+    }
+  }, [buttonDisabled])
+
   return (
-    <View style={style.window}>
+    <View style={styles.window}>
+      <View style={styles.title}>
+        <StyledText text={'Sign Up'} custom={styles.customTitle} title />
+      </View>
       <Formik validationSchema={signUpValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit} validateOnBlur>
         {({ handleSubmit }) => {
           return (
-            <View style={style.form}>
+            <View style={styles.form}>
               <FormikInputValue
                 name='username'
                 placeholder='Username'
@@ -60,45 +75,73 @@ function SignUpPage () {
                 secureTextEntry
                 setDisabled={setValidPassword}
               />
-              <Button
-                onPress={handleSubmit}
-                title='Sign up'
-                disabled={buttonDisabled}
-              />
-              <Text style={{color: 'red'}}>{errorSignUp}</Text>
-              <Text></Text>
-              <Text></Text>
-              <Text style={style.tertiary}>Already have an account?</Text>
-              <Link to='/logIn' underlayColor={'#fff00'} component={TouchableWithoutFeedback}>
-                <Text style={style.link}>Log in</Text>
-              </Link>
+              <Pressable style={buttonStyle} onPress={handleSubmit}>
+                <StyledText text={'SIGN UP'} custom={styles.customButtonText} normal />
+              </Pressable>
+              <StyledText text={errorSignUp} error />
             </View>
           )
         }}
       </Formik>
+      <Link to='/logIn' component={TouchableWithoutFeedback}>
+        <View style={styles.bottomBar}>
+          <StyledText text={"Already have an account? "} subtitle />
+          <StyledText text={" Log in!"} custom={styles.customLogIn} subtitle />
+        </View>
+      </Link>
+
     </View>
   )
 }
 
 
-const style = {
+const styles = StyleSheet.create({
+  title: {
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  customTitle: {
+    color: theme.colors.main
+  },
   form: {
     marginHorizontal: '15%',
     justifyContent: 'center'
   },
   window: {
     height: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: 65
   },
-  link: {
-    textAlign: 'center',
-    color: 'blue',
-    textDecorationLine: 'underline'
+  bottomBar: {
+    flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    bottom: 0,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.main,
+    paddingVertical: 15,
   },
-  tertiary: {
-    textAlign: 'center',
-    color: theme.colors.tertiary
+  customLogIn: {
+    color: theme.colors.main
+  },
+  button: {
+    alignItems: 'center',
+    padding: 7,
+    borderRadius: 3,
+    marginTop: 5
+  },
+  customButtonText: {
+    color: theme.colors.background
+  },
+  buttonDisabled: {
+    backgroundColor: theme.colors.secondary
+  },
+  buttonEnabled: {
+    backgroundColor: theme.colors.main,
   }
-}
+
+})
 
 export default SignUpPage

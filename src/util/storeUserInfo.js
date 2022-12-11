@@ -6,7 +6,6 @@ async function storeUserInfo (data) {
     const storeData = JSON.stringify(data)
     console.log('storeData: ' + storeData)
     await AsyncStorage.setItem('myInfo', storeData)
-
   } catch (e) {
     console.log('info can not be stored or there is no info to store');
   }

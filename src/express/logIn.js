@@ -1,12 +1,12 @@
 import cipherAES from "../helpers/cipherAES"
 import decipherUserInfo from '../helpers/decipherUserInfo'
-
+import {conn} from "./conn"
 
 async function logIn (email, password) {
 
   let fetchResponse = null
 
-  await fetch('http://192.168.1.33:3000/login', {
+  await fetch(conn + '/login', {
     method: 'POST',
     body: JSON.stringify({
       email: cipherAES(email),

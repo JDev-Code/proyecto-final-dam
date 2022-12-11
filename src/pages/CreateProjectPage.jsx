@@ -2,14 +2,15 @@ import BackBar from "../components/BackBar"
 import FormikInputValue from "../components/FormikInputValue"
 import React, { useState, useEffect, useContext } from 'react'
 import { Formik } from 'formik'
-import { Button, View, Text, StyleSheet } from 'react-native'
+import { Pressable, View, StyleSheet, ScrollView } from 'react-native'
 import { theme } from "../../theme"
 import { newProjectValidationSchema } from "../validationSchemas/newProject"
 import BarTab from "../components/BarTab"
 import icons from '../data/iconsData'
 import newProject from "../express/newProject"
 import Context from "../context/Context"
-import { useHistory } from "react-router-native"
+import formatText from "../util/formatText"
+import StyledText from "../components/StyledText"
 
 const initialValues = {
   title: '',
@@ -19,42 +20,13 @@ const initialValues = {
 
 const headerProps = {
   title: 'Share your project idea!',
-  to: '/app/projectList'
+  to: 'project'
 }
-
-const styles = StyleSheet.create({
-  form: {
-    marginHorizontal: '15%',
-    justifyContent: 'center'
-  },
-  window: {
-    height: '100%',
-    justifyContent: 'center'
-  },
-  link: {
-    textAlign: 'center',
-    color: 'blue',
-    textDecorationLine: 'underline',
-  },
-  tertiary: {
-    textAlign: 'center',
-    color: theme.colors.tertiary
-  },
-  icons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: '10%',
-    marginTop: 5,
-    marginBottom: 10
-  }
-})
 
 function CreateProjectPage () {
 
-  const history = useHistory()
-
   const context = useContext(Context)
-  const { userContext, setUserContext } = context
+  const { userContext, setSelectedWindow } = context
 
   const [validTitle, setValidTitle] = useState(false)
   const [validDescription, setValidDescription] = useState(false)
@@ -62,6 +34,7 @@ function CreateProjectPage () {
   const [selectedPlatform, setSelectedPlatform] = useState('')
   const [submitError, setSubmitError] = useState('')
   const [isCreated, setIsCreated] = useState(false)
+  const [buttonStyle, setButtonStyle] = useState([styles.button, styles.buttonDisabled])
 
   useEffect(() => {
     if (validDescription && validTitle && selectedPlatform !== '') {
@@ -72,75 +45,128 @@ function CreateProjectPage () {
   }, [validTitle, validDescription, selectedPlatform])
 
   async function handleFormikSubmit ({ title, description }) {
-    setSubmitError('')
-    console.log(userContext.id);
-    setIsCreated(await newProject(userContext.id, selectedPlatform, title, description))
-    userContext === null && setSubmitError('Something went wrong. Try again later!')
+    if (!buttonDisabled) {
+      setSubmitError('')
+      let formatedDescription = formatText(description)
+      let formatedTitle = formatText(title)
+      console.log(formatedDescription.length, formatedTitle.length);
+      if ((formatedDescription.length >= 20) && (formatedTitle.length >= 3)) {
+        console.log('dentro');
+        setIsCreated(await newProject(userContext.id, selectedPlatform, formatedTitle, formatedDescription))
+        isCreated === null && setSubmitError('Something went wrong. Try again later!')
+      }
+    }
   }
+
+  useEffect(() => {
+    if (buttonDisabled) {
+      setButtonStyle([styles.button, styles.buttonDisabled])
+    } else {
+      setButtonStyle([styles.button, styles.buttonEnabled])
+    }
+  }, [buttonDisabled])
 
   useEffect(() => {
     if (isCreated) {
       setTimeout(() => {
         if (isCreated) {
-          history.goBack()
+          setSelectedWindow('project')
         }
       }, 1500)
     }
   }, [isCreated])
 
   return (
-
-    <View style={{ height: '100%' }}>
+    <View>
       <BackBar title={headerProps.title} to={headerProps.to} />
       {isCreated ?
-        <View style={{height: '92%', alignItems:'center', justifyContent: 'center'}}>
-          <Text style={{ color: 'green' }}>HOLA</Text>
+        <View style={styles.successMsgContainer}>
+          <StyledText text={"PROJECT ADDED SUCCESSFULLY!"} success />
         </View>
         :
-        <View style={{ backgroundColor: 'blue', height: '92%', justifyContent: 'center' }}>
-          <View>
-            <View style={styles.icons}>
-              {icons.map((icon) => {
-                if (icon.filter) {
+        <View style={styles.formContainer}>
+          <ScrollView contentContainerStyle={styles.scroll}>
+            <View>
+              <View style={styles.icons}>
+                {icons.map((icon) => {
+                  if (icon.filter) {
+                    return (
+                      <BarTab name={icon.name} type={icon.type} key={icon.iconName} id={icon.iconName} selectedOption={selectedPlatform} setSelectedOption={setSelectedPlatform} categoriesBar button />
+                    )
+                  }
+                })}
+              </View>
+              <Formik validationSchema={newProjectValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit}>
+                {({ handleSubmit }) => {
                   return (
-                    <BarTab name={icon.name} type={icon.type} key={icon.iconName} id={icon.iconName} selectedOption={selectedPlatform} setSelectedOption={setSelectedPlatform} categoriesBar button />
+                    <View style={styles.form}>
+                      <FormikInputValue
+                        name='title'
+                        placeholder='Title'
+                        setDisabled={setValidTitle}
+                      />
+                      <FormikInputValue
+                        name='description'
+                        placeholder='Description'
+                        setDisabled={setValidDescription}
+                        multiline={true}
+                        numberOfLines={10}
+                      />
+                      <Pressable style={buttonStyle} onPress={handleSubmit}>
+                        <StyledText text={'SHARE IT'} custom={styles.customButtonText} normal />
+                      </Pressable>
+                      <StyledText text={submitError} error />
+                    </View>
                   )
-                }
-              })}
+                }}
+              </Formik>
             </View>
-            <Text></Text>
-            <Formik validationSchema={newProjectValidationSchema} initialValues={initialValues} onSubmit={handleFormikSubmit}>
-              {({ handleSubmit }) => {
-                return (
-                  <View style={styles.form}>
-                    <FormikInputValue
-                      name='title'
-                      placeholder='Title'
-                      setDisabled={setValidTitle}
-                    />
-                    <FormikInputValue
-                      name='description'
-                      placeholder='Description'
-                      setDisabled={setValidDescription}
-                      multiline={true}
-                      numberOfLines={10}
-                    />
-                    <Button
-                      onPress={handleSubmit}
-                      title='Share it!'
-                      disabled={buttonDisabled}
-                    />
-                    <Text style={{ color: 'red' }}>{submitError}</Text>
-                  </View>
-                )
-              }}
-            </Formik>
-          </View>
+          </ScrollView>
         </View>
-
       }
-    </View>
+    </View >
   )
 }
+
+const styles = StyleSheet.create({
+  successMsgContainer: {
+    height: '92%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  formContainer: {
+    justifyContent: 'center'
+  },
+  scroll: {
+    justifyContent: "center",
+    height: '92%'
+  },
+  form: {
+    marginHorizontal: '10%',
+    justifyContent: 'center'
+  },
+  icons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: '6%',
+    marginTop: 5,
+    marginBottom: 30
+  },
+  button: {
+    alignItems: 'center',
+    padding: 7,
+    borderRadius: 3,
+    marginTop: 5
+  },
+  customButtonText: {
+    color: theme.colors.background
+  },
+  buttonDisabled: {
+    backgroundColor: theme.colors.secondary
+  },
+  buttonEnabled: {
+    backgroundColor: theme.colors.main,
+  }
+})
 
 export default CreateProjectPage

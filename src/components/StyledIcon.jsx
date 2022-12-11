@@ -1,6 +1,46 @@
 import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { Icon } from "@rneui/themed"
+import { theme } from "../../theme"
+
+function StyledIcon ({ name, type, selected, ...props }) {
+
+  let color = theme.colors.default
+  if (selected || props.backBar || props.plus) color = theme.colors.main
+  if (props.logout) color = theme.colors.error
+  if (props.projectChat) color = theme.colors.secondary
+  if (props.trash) color = theme.colors.secondary
+
+  let position
+  if (props.projectIcon) position = 0
+  if (props.categoriesBar) position = 1
+  if (props.appBar) position = 2
+  if (props.backBar) position = 3
+  if (props.plus) position = 4
+  if (props.logout) position = 5
+  if (props.projectChat) position = 6
+  if (props.trash) position = 7
+
+
+  const style = [
+    props.projectIcon && styles.projectIcon,
+    props.categoriesBar && styles.categoriesBar,
+    props.appBar && styles.appBar,
+    props.backBar && styles.backBar,
+    props.plus && styles.plus,
+    props.logout && styles.logout,
+    props.projectChat && styles.projectChat,
+    props.trash && styles.trash,
+    styles.general
+  ]
+
+  return (
+    <View style={style}>
+      <Icon name={name} type={type} color={color} size={style[position].size} />
+    </View>
+  )
+}
+
 
 const styles = StyleSheet.create({
   projectIcon: {
@@ -23,39 +63,26 @@ const styles = StyleSheet.create({
     height: 43,
     width: 43
   },
+  plus: {
+    size: 20,
+    paddingRight: 5
+  },
+  logout: {
+    size: 18,
+    marginLeft: 7,
+  },
+  projectChat: {
+    size: 18,
+    paddingLeft: 5,
+    paddingTop: 2
+  },
+  trash: {
+    size: 55
+  },
   general: {
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center'
   }
 })
 
-function StyledIcon ({ name, type, selected,...props }) {
-
-  let color = '#f0f0f0'
-  if (selected) color = '#a260c0'
-
-  let position
-  if (props.projectIcon) position = 0
-  if (props.categoriesBar) position = 1
-  if (props.appBar) position = 2
-  if (props.backBar) position = 3
-
-
-  const style = [
-    props.projectIcon && styles.projectIcon,
-    props.categoriesBar && styles.categoriesBar,
-    props.appBar && styles.appBar,
-    props.backBar && styles.backBar,
-    styles.general
-  ]
-
-  return (
-    <View style={style}>
-      <Icon name={name} type={type} color={color} size={style[position].size} />
-    </View>
-  )
-}
-
 export default StyledIcon
-
-// <Icon name={name} type={type} color={style[position].color} size={style[position].size} />

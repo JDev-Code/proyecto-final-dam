@@ -1,13 +1,14 @@
+import cipherAES from "../helpers/cipherAES"
 import {conn} from "./conn"
 
-async function getProjects () {
-
+async function getMessages (id) {
   let fetchResponse = []
 
-  await fetch(conn + '/getprojects', {
+  await fetch(conn + '/getmessages', {
     method: 'GET',
     headers: {
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
+      'id': cipherAES(id)
     }
   }).then(response => {
     return response.json()
@@ -16,11 +17,11 @@ async function getProjects () {
       fetchResponse = data.data
     }
   }).catch(error => {
-    console.log('ERROR GETTING PROJECTS: ' + error)
+    console.log('ERROR: ' + error)
     throw error
   })
 
   return fetchResponse
 }
 
-export default getProjects
+export default getMessages

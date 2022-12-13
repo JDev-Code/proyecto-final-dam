@@ -8,10 +8,6 @@ import { socket } from "../express/socketConnection"
 
 const Context = React.createContext({})
 
-socket.on('welcome', msg => {
-  console.log(msg)
-})
-
 export function AppContext ({ children }) {
   const history = useHistory()
 
@@ -22,28 +18,23 @@ export function AppContext ({ children }) {
   const [selectedWindow, setSelectedWindow] = useState('')
   const [projectsContext, setProjectsContext] = useState('')
   const [receivedMsg, setReceivedMsg] = useState(null)
-
-  if (newMessageContext !== null) {
-    setMessagesContext([...newMessageContext.all])
-    console.log('EMITTING...');
-    socket.emit('sendMsg', newMessageContext.id, newMessageContext.newMsg)
-    setNewMessageContext(null)
-  }
-
-  socket.on('msgFromServer', (msg) => {
-    setReceivedMsg(msg)
-  })
+  const [currentSocketId, setCurrentSocketId] = useState('')
 
   useEffect(() => {
-    if (messagesContext !== null) {
-      if (receivedMsg.msgTo === userContext.id) {
-        let newMessages = messagesContext
-        newMessages.push(receivedMsg)
-        setMessagesContext([...newMessages])
+    socket.on('welcome', msg => {
+      console.log(msg)
+      setCurrentSocketId(socket.id)
+    })
+  }, [])
+
+  useEffect(() => {
+    console.log('Socket changed')
+    if (currentSocketId !== '') {
+      if (userContext.id !== null) {
+        createRoom(userContext.id)
       }
     }
-  }, [receivedMsg])
-
+  }, [currentSocketId])
 
   useEffect(() => {
     const read = async () => {
@@ -53,16 +44,13 @@ export function AppContext ({ children }) {
     read()
   }, [])
 
-  function createRoom (id) {
-    socket.emit('createRoom', id)
-  }
-
   useEffect(() => {
     if (userContext) {
       const action = async () => {
         if (userContext === 'delete') {
           await removeUserInfo()
           setUserContext('no-user')
+          console.log('no-user');
           setMessagesContext(null)
         }
         if ((userContext !== 'no-user') && (userContext !== 'delete')) {
@@ -76,11 +64,41 @@ export function AppContext ({ children }) {
     }
   }, [userContext])
 
+  function createRoom (id) {
+    console.log('creating room', id);
+    socket.emit('createRoom', id)
+  }
+
   useEffect(() => {
     if (selectedChatContext !== null) {
       setSelectedWindow('currentChat')
     }
   }, [selectedChatContext])
+
+  useEffect(() => {
+    if (newMessageContext !== null) {
+      setMessagesContext([...newMessageContext.all])
+      console.log('EMITTING...');
+      socket.emit('sendMsg', newMessageContext.id, newMessageContext.newMsg)
+      setNewMessageContext(null)
+    }
+  }, [newMessageContext])
+
+  useEffect(() => {
+    socket.on('msgFromServer', (msg) => {
+      setReceivedMsg(msg)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (messagesContext !== null) {
+      if (receivedMsg.msgTo === userContext.id) {
+        let newMessages = messagesContext
+        newMessages.push(receivedMsg)
+        setMessagesContext([...newMessages])
+      }
+    }
+  }, [receivedMsg])
 
 
   useEffect(() => {

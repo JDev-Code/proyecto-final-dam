@@ -15,7 +15,6 @@ import CurrentChatPage from '../pages/CurrentChatPage'
 import { theme } from '../../theme'
 
 function Main () {
-
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
 
   return (

@@ -3,7 +3,7 @@ import {conn} from "./conn"
 
 
 async function newProject (id, platform, title, description) {
-  let fetchResponse = null
+  let fetchResponse = false
 
   await fetch(conn + '/newproject', {
     method: 'POST',

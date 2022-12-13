@@ -32,11 +32,17 @@ function SignUpPage () {
 
   async function handleFormikSubmit ({ username, email, password }) {
     if (!buttonDisabled) {
-      setErrorSignUp('')
+      setUserContext('')
       setUserContext(await signUp(username, email, password))
-      userContext === null && setErrorSignUp('Email already in use!')
     }
   }
+
+  useEffect(() => {
+    userContext === null ? 
+    setErrorSignUp('Email already in use!')
+    : 
+    setErrorSignUp('')
+  }, [userContext])
 
   useEffect(() => {
     validUsername && validEmail && validPassword ? setButtonDisabled(false) : setButtonDisabled(true)
@@ -130,7 +136,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 7,
     borderRadius: 3,
-    marginTop: 5
+    marginTop: 5,
+    marginBottom: 5
   },
   customButtonText: {
     color: theme.colors.background

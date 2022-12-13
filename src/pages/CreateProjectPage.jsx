@@ -33,7 +33,7 @@ function CreateProjectPage () {
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [selectedPlatform, setSelectedPlatform] = useState('')
   const [submitError, setSubmitError] = useState('')
-  const [isCreated, setIsCreated] = useState(false)
+  const [isCreated, setIsCreated] = useState()
   const [buttonStyle, setButtonStyle] = useState([styles.button, styles.buttonDisabled])
 
   useEffect(() => {
@@ -46,16 +46,21 @@ function CreateProjectPage () {
 
   async function handleFormikSubmit ({ title, description }) {
     if (!buttonDisabled) {
-      setSubmitError('')
+      setIsCreated('')
       let formatedDescription = formatText(description)
       let formatedTitle = formatText(title)
       if ((formatedDescription.length >= 20) && (formatedTitle.length >= 3)) {
-        console.log('dentro');
         setIsCreated(await newProject(userContext.id, selectedPlatform, formatedTitle, formatedDescription))
-        isCreated === null && setSubmitError('Something went wrong. Try again later!')
       }
     }
   }
+
+  useEffect(() => {
+    isCreated === false ? 
+    setSubmitError('Something went wrong. Try again later!')
+    : 
+    setSubmitError('')
+  }, [isCreated])
 
   useEffect(() => {
     if (buttonDisabled) {
@@ -155,7 +160,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 7,
     borderRadius: 3,
-    marginTop: 5
+    marginTop: 5,
+    marginBottom: 5
   },
   customButtonText: {
     color: theme.colors.background

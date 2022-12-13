@@ -29,11 +29,17 @@ function LogInPage () {
 
   async function handleFormikSubmit ({ email, password }) {
     if (!buttonDisabled) {
-      setErrorLogIn('')
+      setUserContext('')
       setUserContext(await logIn(email, password))
-      userContext === null && setErrorLogIn('Incorrect data. Try again!')
     }
   }
+
+  useEffect(() => {
+    userContext === null ? 
+    setErrorLogIn('Incorrect data. Try again!')
+    : 
+    setErrorLogIn('')
+  }, [userContext])
 
   useEffect(() => {
     if (buttonDisabled) {
@@ -121,7 +127,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 7,
     borderRadius: 3,
-    marginTop: 5
+    marginTop: 5,
+    marginBottom: 5
   },
   customButtonText: {
     color: theme.colors.background

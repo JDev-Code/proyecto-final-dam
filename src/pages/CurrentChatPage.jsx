@@ -22,16 +22,17 @@ function CurrentChatPage () {
   const context = useContext(Context)
   const { userContext, selectedChatContext, messagesContext, setNewMessageContext } = context
 
-  const headerProps = {
-    title: selectedChatContext.username + ' #' + selectedChatContext.identifier,
-    to: "chat"
-  }
   const [thisChatMessages, setThisChatMessages] = useState([])
   const [isMessages, setIsMessages] = useState(false)
   const [validMessage, setValidMessage] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [messageToSend, setMessageToSend] = useState(null)
   const [buttonStyle, setButtonStyle] = useState([styles.button, styles.buttonDisabled])
+
+  const headerProps = {
+    title: selectedChatContext.username + ' #' + selectedChatContext.identifier,
+    to: "chat"
+  }
 
   useEffect(() => {
     if (buttonDisabled) {
@@ -48,7 +49,6 @@ function CurrentChatPage () {
       if (formatedMessage !== '') {
         const { allMessages, newMessageToSend } = pushMyNewMessage(userContext, selectedChatContext, formatedMessage, messagesContext)
         setNewMessageContext({ 'id': selectedChatContext.id, 'newMsg': newMessageToSend, 'all': allMessages })
-        console.log('ENVIANDO...')
       }
       setMessageToSend(null)
       if (listViewRef !== undefined) {

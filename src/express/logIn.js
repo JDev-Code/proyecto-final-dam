@@ -2,6 +2,7 @@ import cipherAES from "../cipher/cipherAES"
 import decipherUserInfo from '../cipher/decipherUserInfo'
 import {conn} from "./conn"
 
+// Llamada al servidor para comprobar si un usuario existe y recuperar su información
 async function logIn (email, password) {
 
   let fetchResponse = null

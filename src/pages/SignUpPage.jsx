@@ -16,6 +16,7 @@ const initialValues = {
   password: ''
 }
 
+// Página con el formulario para registrarse (SignUp)
 function SignUpPage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   DeviceEventEmitter.addListener('hardwareBackPress', () => { BackHandler.exitApp() })

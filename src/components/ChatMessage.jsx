@@ -4,6 +4,7 @@ import { theme } from "../../theme"
 import Context from "../context/Context"
 import StyledText from "./StyledText"
 
+// Crea cada uno de los mensajes de un chat
 function ChatMessage ({ from, msg }) {
 
   const context = useContext(Context)

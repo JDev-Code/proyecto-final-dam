@@ -7,6 +7,7 @@ import StyledIcon from "./StyledIcon"
 import StyledText from "./StyledText"
 import { theme } from "../../theme"
 
+// Crea una barra de título
 function TitleTopBar ({ title }) {
 
   const context = useContext(Context)

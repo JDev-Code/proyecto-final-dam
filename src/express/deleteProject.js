@@ -1,5 +1,6 @@
 import {conn} from "./conn"
 
+// Llamada al servidor para borrar un proyecto
 async function deleteProject (id) {
 
   let fetchResponse = null

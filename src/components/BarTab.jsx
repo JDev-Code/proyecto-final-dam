@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback, View, StyleSheet } from "react-native";
 import { theme } from '../../theme';
 import StyledIcon from './StyledIcon';
 
+// Crea pestañas para una barra, con iconos
 function BarTab ({ name, type, id, selectedOption, setSelectedOption, ...props }) {
 
   const [selected, setSelected] = useState(false)

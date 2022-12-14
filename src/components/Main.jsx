@@ -14,6 +14,7 @@ import CreateProjectPage from '../pages/CreateProjectPage'
 import CurrentChatPage from '../pages/CurrentChatPage'
 import { theme } from '../../theme'
 
+// Controla la estructura y rutas de toda la aplicación
 function Main () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
 

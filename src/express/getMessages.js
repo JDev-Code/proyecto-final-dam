@@ -1,6 +1,7 @@
 import cipherAES from "../cipher/cipherAES"
 import {conn} from "./conn"
 
+// Llamada al servidor para obtener todos los mensajes de un usuario
 async function getMessages (id) {
   let fetchResponse = []
 

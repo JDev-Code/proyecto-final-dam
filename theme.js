@@ -1,3 +1,4 @@
+// Archivo temático de estilos para toda la APP
 export const theme = {
   fontSizes: {
     big: 20,

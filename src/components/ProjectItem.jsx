@@ -6,6 +6,7 @@ import StyledIcon from "./StyledIcon"
 import getProjects from "../express/getProjects"
 import deleteProject from "../express/deleteProject"
 
+// Crea el contenedor para cada uno de los proyectos
 function ProjectItem ({ project, setSelectedProject, selectedProject, ...props }) {
 
   const [open, setOpen] = useState(false)

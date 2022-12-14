@@ -4,6 +4,7 @@ import BackButton from "./BackButton"
 import CustomImage from "./CustomImage"
 import StyledText from "./StyledText"
 
+// Crea una barra con botón de 'ATRAS'
 function BackBar ({ title, to, ...props }) {
 
   return (

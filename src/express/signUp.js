@@ -2,6 +2,7 @@ import cipherAES from '../cipher/cipherAES'
 import decipherUserInfo from '../cipher/decipherUserInfo'
 import {conn} from "./conn"
 
+// Llamada al servidor para registrar un nuevo usuario
 async function signUp (username, email, password) {
 
   let fetchResponse = null

@@ -17,6 +17,7 @@ let initialValues = {
   chatInput: ''
 }
 
+// Página con los mensajes del chat elegido y el formulario para enviar uno
 function CurrentChatPage () {
 
   const context = useContext(Context)

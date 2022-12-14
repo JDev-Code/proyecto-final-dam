@@ -23,6 +23,7 @@ const headerProps = {
   to: 'project'
 }
 
+// Página con el formulario para crear un nuevo proyecto
 function CreateProjectPage () {
 
   const context = useContext(Context)

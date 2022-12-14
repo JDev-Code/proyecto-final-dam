@@ -1,6 +1,6 @@
 import {  Image, StyleSheet } from "react-native"
 
-
+// Da estilos a una imagen
 function CustomImage ({ source, landingPage, projectsListPage, chatItem, currentChat, myProfile }) {
 
   const style = [

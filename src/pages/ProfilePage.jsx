@@ -8,6 +8,7 @@ import { socket } from '../express/socketConnection'
 import StyledIcon from '../components/StyledIcon'
 import ProjectList from '../components/ProyectList'
 
+// Página con la información de tu perfil personal
 function ProfilePage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
 

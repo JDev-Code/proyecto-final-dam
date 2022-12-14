@@ -1,3 +1,4 @@
+// Datos de prueba estáticos sobre proyectos
 export default [
   {
     id: 1,

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import Context from '../context/Context'
 import ChatItem from './ChatItem'
 import StyledText from './StyledText'
 
+// Crea una lista con tus chats
 function ChatList ({setSelectedChatContext}) {
 
   const context = useContext(Context)

@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { View, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { theme } from '../../theme'
 import CustomImage from './CustomImage'
 import StyledText from './StyledText'
 
-
+// Crea un elemento de la lista de los chats
 function ChatItem ({ chat, setSelectedChat }) {
 
   function handleSelectedChat () {

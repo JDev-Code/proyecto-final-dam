@@ -1,3 +1,4 @@
+// Añade el mensaje nuevo a los ya existentes y devulve ambos
 function pushMyNewMessage ( from, to, msg, messagesContext) {
 
   let allMessages = messagesContext

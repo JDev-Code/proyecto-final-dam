@@ -3,6 +3,7 @@ import { View, FlatList, StyleSheet } from 'react-native'
 import ProjectItem from './ProjectItem'
 import StyledText from './StyledText'
 
+// Crea la lista de proyectos en función a donde aparece y el filtro aplicado
 function ProyectList ({ filter, projects, ...props }) {
 
   const [selectedProject, setSelectedProject] = useState('')

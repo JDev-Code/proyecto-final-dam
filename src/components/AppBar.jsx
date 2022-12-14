@@ -5,6 +5,7 @@ import BarTab from './BarTab'
 import Context from '../context/Context'
 import { theme } from '../../theme'
 
+// Crea una barra de navegación
 function AppBar () {
   const context = useContext(Context)
   const { selectedWindow, setSelectedWindow } = context

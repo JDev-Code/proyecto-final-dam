@@ -2,6 +2,29 @@ import React from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 import { theme } from '../../theme'
 
+// Asigna un estilo para aplicar a una entrada de textos
+function StyledTextInput ({ value, style, error, multiline, chat, ...props }) {
+
+  let inputStyle = [
+    styles.textInput,
+    multiline && styles.multiline,
+    chat && styles.chat,
+    error && styles.error,
+    !error && styles.noError,
+    value === '' && styles.default,
+    style,
+  ]
+
+  return (
+    <TextInput
+      value={value}
+      style={inputStyle}
+      placeholderTextColor={'lightgrey'}
+      multiline={multiline}
+      {...props} />
+  )
+}
+
 const styles = StyleSheet.create({
   textInput: {
     borderBottomWidth: 2,
@@ -34,27 +57,5 @@ const styles = StyleSheet.create({
     width: '80%'
   }
 })
-
-function StyledTextInput ({ value, style, error, multiline, chat, ...props }) {
-
-  let inputStyle = [
-    styles.textInput,
-    multiline && styles.multiline,
-    chat && styles.chat,
-    error && styles.error,
-    !error && styles.noError,
-    value === '' && styles.default,
-    style,
-  ]
-
-  return (
-    <TextInput
-      value={value}
-      style={inputStyle}
-      placeholderTextColor={'lightgrey'}
-      multiline={multiline}
-      {...props} />
-  )
-}
 
 export default StyledTextInput

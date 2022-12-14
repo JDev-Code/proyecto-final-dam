@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+// Guarda información de usuario en local
 async function storeUserInfo (data) {
 
   try {

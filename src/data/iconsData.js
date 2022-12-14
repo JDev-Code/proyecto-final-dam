@@ -1,3 +1,4 @@
+// Información de los iconos utilizados en la App
 export default [
   {
     appbar: true,

@@ -6,6 +6,7 @@ import getProjects from "../express/getProjects"
 import TitleTopBar from "../components/TitleTopBar"
 import Context from "../context/Context"
 
+// Página con la lista de proyectos existentes
 function ProjectListPage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   DeviceEventEmitter.addListener('hardwareBackPress', () => { BackHandler.exitApp() })

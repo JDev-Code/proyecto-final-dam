@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { View, StyleSheet, TouchableWithoutFeedback, ScrollView, Animated } from 'react-native'
 import StyledText from "./StyledText"
 
+// Crea el contenido desplegable del interior de cada proyecto
 function ProjectContent ({ description, show }) {
 
   const animate = useRef(new Animated.Value(0)).current

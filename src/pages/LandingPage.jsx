@@ -3,6 +3,7 @@ import { View, StyleSheet, DeviceEventEmitter } from "react-native"
 import CustomImage from "../components/CustomImage"
 import Context from "../context/Context"
 
+// Página de transición con el logo de la App
 function LandingPage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
 

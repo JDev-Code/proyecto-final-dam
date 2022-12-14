@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react"
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import React from "react"
+import { View, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import icons from '../data/iconsData'
-import StyledIcon from "./StyledIcon"
 import BarTab from "./BarTab"
 import StyledText from "./StyledText"
 import { theme } from "../../theme"
 
 
-
+// Crea la barra con las categorías de los proyectos
 function CategoriesBar ({selectedOption, setSelectedOption}) {
   
   function handlePressAll(){

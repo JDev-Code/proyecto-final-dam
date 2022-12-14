@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, StyleSheet } from 'react-native'
 import { theme } from '../../theme'
 
+// Crea un texto estilado
 function StyledText ({ text, ...props }) {
 
   const style = [

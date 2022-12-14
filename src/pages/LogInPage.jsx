@@ -14,6 +14,7 @@ const initialValues = {
   password: ''
 }
 
+// Página con el formulario de LogIn
 function LogInPage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   DeviceEventEmitter.addListener('hardwareBackPress', () => { BackHandler.exitApp() })

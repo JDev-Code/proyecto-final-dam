@@ -8,6 +8,7 @@ import { socket } from "../express/socketConnection"
 
 const Context = React.createContext({})
 
+// Contexto global a la aplicación con funcionalidades asociadas
 export function AppContext ({ children }) {
   const history = useHistory()
 

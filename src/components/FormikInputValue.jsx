@@ -11,6 +11,7 @@ const style = {
   }
 }
 
+// Crea un campo de texto para un formulario y maneja sus errores
 function FormikInputValue ({ name, setDisabled, ...props }) {
 
   const [field, meta, helpers] = useField(name)

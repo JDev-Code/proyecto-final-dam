@@ -4,6 +4,7 @@ import ChatList from "../components/ChatList"
 import TitleTopBar from "../components/TitleTopBar"
 import Context from "../context/Context"
 
+// Página con la lista de tus chats
 function ChatsPage () {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   DeviceEventEmitter.addListener('hardwareBackPress', handleBackPress)

@@ -1,6 +1,7 @@
 import cipherAES from "../cipher/cipherAES"
 import {conn} from "./conn"
 
+// Llamada al servidor para obtener información de un usuario
 async function getUserInfo (id) {
 
   let fetchResponse = null

@@ -5,7 +5,7 @@ import Context from "../context/Context";
 import StyledText from "./StyledText";
 import StyledIcon from "./StyledIcon";
 
-
+// Crea la cabecera de cada uno de los proyectos
 function ProjectHeader ({ id, platform, title, username, identifier, user_id }) {
 
   const context = useContext(Context)

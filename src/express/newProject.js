@@ -1,7 +1,7 @@
 import cipherAES from "../cipher/cipherAES"
 import {conn} from "./conn"
 
-
+// Llamada al servidor para añadir un nuevo proyecto a la base de datos
 async function newProject (id, platform, title, description) {
   let fetchResponse = false
 

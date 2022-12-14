@@ -4,7 +4,7 @@ import StyledIcon from "./StyledIcon"
 import Context from "../context/Context"
 
 
-
+// Crea un botón de 'ATRAS'
 function BackButton ({ to }) {
   DeviceEventEmitter.removeAllListeners('hardwareBackPress')
   DeviceEventEmitter.addListener('hardwareBackPress', handleBackPress)

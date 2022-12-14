@@ -1,5 +1,6 @@
 import {conn} from "./conn"
 
+// Llamada al servidor para obtener la información de todos los proyectos
 async function getProjects () {
 
   let fetchResponse = []

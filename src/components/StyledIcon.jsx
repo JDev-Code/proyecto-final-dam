@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native"
 import { Icon } from "@rneui/themed"
 import { theme } from "../../theme"
 
+// Da estilos a los iconos de la aplicación dependiendo de la procedencia
 function StyledIcon ({ name, type, selected, ...props }) {
 
   let color = theme.colors.default

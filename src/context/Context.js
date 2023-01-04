@@ -79,7 +79,7 @@ export function AppContext ({ children }) {
   useEffect(() => {
     if (newMessageContext !== null) {
       setMessagesContext([...newMessageContext.all])
-      console.log('EMITTING...');
+      console.log('EMITTING...')
       socket.emit('sendMsg', newMessageContext.id, newMessageContext.newMsg)
       setNewMessageContext(null)
     }
@@ -94,13 +94,10 @@ export function AppContext ({ children }) {
   useEffect(() => {
     if (messagesContext !== null) {
       if (receivedMsg.msgTo === userContext.id) {
-        let newMessages = messagesContext
-        newMessages.push(receivedMsg)
-        setMessagesContext([...newMessages])
+        setMessagesContext([...messagesContext, receivedMsg])
       }
     }
   }, [receivedMsg])
-
 
   useEffect(() => {
     selectedWindow === 'landingPage' && history.push('/landingPage')
